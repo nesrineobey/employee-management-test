@@ -1,0 +1,176 @@
+<mat-toolbar color="primary">
+  <span>Dashboard Employee</span>
+  <div class="spacer"></div>
+  <button
+    mat-raised-button
+    color="accent"
+    data-bs-toggle="modal"
+    data-bs-target="#exampleModal"
+  >
+    Add Employee
+  </button>
+</mat-toolbar>
+<mat-form-field appearance="standard">
+  <mat-label>Filter</mat-label>
+  <input
+    matInput
+    (keyup)="applyFilter($event)"
+    placeholder="Ex. Tiger"
+    autocomplete="off"
+  />
+</mat-form-field>
+<div class="mat-elevation-z8">
+  <table mat-table matSort [dataSource]="dataSource">
+    <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- id Column -->
+    <ng-container matColumnDef="id">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        sortActionDescription="Sort by number"
+      >
+        ID
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="employee_name">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        sortActionDescription="Sort by name"
+      >
+        Name
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.employee_name }}</td>
+    </ng-container>
+
+    <!-- age Column -->
+    <ng-container matColumnDef="employee_age">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        sortActionDescription="Sort by number"
+      >
+        Age
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.employee_age }}</td>
+    </ng-container>
+
+    <!-- Salary Column -->
+    <ng-container matColumnDef="employee_salary">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        sortActionDescription="Sort by number"
+      >
+        Salary
+      </th>
+      <td mat-cell *matCellDef="let element">{{ element.employee_salary }}</td>
+    </ng-container>
+    <!-- Salary Column -->
+    <ng-container matColumnDef="profile_image">
+      <th mat-header-cell *matHeaderCellDef>Image</th>
+      <td mat-cell *matCellDef="let element">{{ element.profile_image }}</td>
+    </ng-container>
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef>Action</th>
+      <td mat-cell *matCellDef="let i = index">
+        <button mat-icon-button color="warn" (click)="deleteEmployee(i)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    aria-label="select page"
+  >
+  </mat-paginator>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Employee Details</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="myForm">
+          <div class="mb-3">
+            <label for="name" controlName="employee_name" class="form-label"
+              >Name</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              aria-describedby="nameHelp"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="age" controlName="employee_age" class="form-label"
+              >Age</label
+            >
+            <input type="text" class="form-control" id="age" />
+          </div>
+          <div class="mb-3">
+            <label for="salary" controlName="employee_salary" class="form-label"
+              >Salary</label
+            >
+            <input type="text" class="form-control" id="salary" />
+          </div>
+          <div class="custom-file">
+            <input
+              type="file"
+              class="custom-file-input"
+              id="customFileLang"
+              lang="en"
+            />
+            <label class="custom-file-label" for="customFileLang"
+              >Choose image</label
+            >
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="addEmp()">
+          Add
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          (click)="(reset)"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
